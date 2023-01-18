@@ -1,6 +1,7 @@
 package com.kafka.streams;
 
 import java.util.Properties;
+import java.util.Scanner;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -17,11 +18,12 @@ public class ApacheKafkaProducer {
 
         KafkaProducer<String,String> producer = new KafkaProducer<String,String>(properties);
 
-        int i = 17;
+        int i = 5;
 
-        while (i<23){
+        while (i<10){
             i++;
-            ProducerRecord<String,String> record = new ProducerRecord<String,String>("test", null, null, Integer.toString(i));
+            Scanner scanner =  new Scanner(System.console().readLine("Provide input as Key, Vlaue = " ));
+            ProducerRecord<String,String> record = new ProducerRecord<String,String>("test", null, null, scanner.nextLine());
             producer.send(record);
            
         
