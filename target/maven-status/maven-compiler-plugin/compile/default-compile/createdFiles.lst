@@ -1,0 +1,4 @@
+com/kafka/streams/WordCountApp.class
+com/kafka/streams/App.class
+com/kafka/streams/ApacheKafkaConsumer.class
+com/kafka/streams/ApacheKafkaProducer.class
