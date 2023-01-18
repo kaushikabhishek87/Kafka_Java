@@ -11,11 +11,8 @@ import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
-import org.apache.kafka.streams.kstream.Aggregator;
-import org.apache.kafka.streams.kstream.Grouped;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
-import org.apache.kafka.streams.kstream.KeyValueMapper;
 
 public class FavouriteColour{
 
@@ -44,19 +41,28 @@ public class FavouriteColour{
 
         KTable<String, String> favouriteColorInterim = 
         favouriteColorInput
-        .map((key, value) -> KeyValue.pair(value.split(",")[0], value.split(",")[1]))
+        .filter((key,value) -> value.contains(","))
+        .map((key, value) -> KeyValue.pair(value.split(",")[0].toLowerCase()
+        , value.split(",")[1].toLowerCase()))
+        .filter((key,value) -> Arrays.asList("green","blue","red").contains(value))
         .toTable();
 
-        KTable<String, Long> favouriteColorOutput = favouriteColorInterim.
-        toStream().
-        selectKey((key,value) -> value)
-        .groupByKey()
-        .count();
+        // KTable<String, Long> favouriteColorOutput = favouriteColorInterim.
+        // toStream().
+        // selectKey((key,value) -> value)
+        // .groupByKey()
+        // .count();
+
         
+        KTable<String, Long> favouriteColorOutput = favouriteColorInterim
+        .groupBy((key, value) -> new KeyValue<>(value, value))
+        .count();
+
         favouriteColorOutput.toStream().to("favouriteColorOutput");
 
         KafkaStreams streams = new KafkaStreams(builder.build(), properties);
         
+        streams.cleanUp();
         streams.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
