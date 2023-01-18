@@ -23,7 +23,7 @@ public class ApacheKafkaProducer {
         while (i<10){
             i++;
             Scanner scanner =  new Scanner(System.console().readLine("Provide input as Key, Vlaue = " ));
-            ProducerRecord<String,String> record = new ProducerRecord<String,String>("test", null, null, scanner.nextLine());
+            ProducerRecord<String,String> record = new ProducerRecord<String,String>("favourite_colour", null, null, scanner.nextLine());
             producer.send(record);
            
         
