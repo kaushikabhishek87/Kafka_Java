@@ -20,6 +20,28 @@
 
   <dependencies>
 
+    <!-- https://mvnrepository.com/artifact/io.confluent/kafka-json-serializer -->
+<dependency>
+    <groupId>io.confluent</groupId>
+    <artifactId>kafka-json-serializer</artifactId>
+    <version>4.1.1</version>
+</dependency>
+
+
+     <dependency>
+      <groupId>com.googlecode.json-simple</groupId>
+      <artifactId>json-simple</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>2.14.1</version>
+          </dependency>
+
+
     <dependency>
       <groupId>org.apache.kafka</groupId>
       <artifactId>kafka-clients</artifactId>
@@ -54,6 +76,13 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <repositories>
+    <repository>
+        <id>confluent</id>
+        <url>https://packages.confluent.io/maven/</url>
+    </repository>
+</repositories>
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
